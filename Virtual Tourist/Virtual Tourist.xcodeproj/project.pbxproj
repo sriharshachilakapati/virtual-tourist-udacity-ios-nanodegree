@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		205F635B26274D1D005812FF /* ApiDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F635826274D1C005812FF /* ApiDefinition.swift */; };
+		205F635C26274D1D005812FF /* URLRequestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F635A26274D1C005812FF /* URLRequestHelpers.swift */; };
+		205F636126274D8D005812FF /* NetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636026274D8D005812FF /* NetworkDataSource.swift */; };
+		205F636526274D9D005812FF /* CachedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636426274D9D005812FF /* CachedDataSource.swift */; };
+		205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636F26275196005812FF /* VirtualTouristRepository.swift */; };
+		205F637426277DDC005812FF /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637326277DDC005812FF /* Observable.swift */; };
 		20B6946B26235BCD00A999A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946A26235BCD00A999A9 /* AppDelegate.swift */; };
 		20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946C26235BCD00A999A9 /* SceneDelegate.swift */; };
 		20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946E26235BCD00A999A9 /* MapViewController.swift */; };
@@ -19,6 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		205F635826274D1C005812FF /* ApiDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiDefinition.swift; sourceTree = "<group>"; };
+		205F635A26274D1C005812FF /* URLRequestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestHelpers.swift; sourceTree = "<group>"; };
+		205F636026274D8D005812FF /* NetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataSource.swift; sourceTree = "<group>"; };
+		205F636426274D9D005812FF /* CachedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedDataSource.swift; sourceTree = "<group>"; };
+		205F636F26275196005812FF /* VirtualTouristRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristRepository.swift; sourceTree = "<group>"; };
+		205F637326277DDC005812FF /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		20B6946726235BCD00A999A9 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20B6946A26235BCD00A999A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B6946C26235BCD00A999A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +56,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		205F635626274CD0005812FF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				205F636E26274EDD005812FF /* Accessors */,
+				205F635F26274D67005812FF /* Sources */,
+				205F635726274CE5005812FF /* Framework */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		205F635726274CE5005812FF /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				205F635826274D1C005812FF /* ApiDefinition.swift */,
+				205F635A26274D1C005812FF /* URLRequestHelpers.swift */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		205F635F26274D67005812FF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				205F636026274D8D005812FF /* NetworkDataSource.swift */,
+				205F636426274D9D005812FF /* CachedDataSource.swift */,
+				205F637326277DDC005812FF /* Observable.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		205F636E26274EDD005812FF /* Accessors */ = {
+			isa = PBXGroup;
+			children = (
+				205F636F26275196005812FF /* VirtualTouristRepository.swift */,
+			);
+			path = Accessors;
+			sourceTree = "<group>";
+		};
 		20B6945E26235BCD00A999A9 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +113,7 @@
 		20B6946926235BCD00A999A9 /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
+				205F635626274CD0005812FF /* Data */,
 				20B694892625C49900A999A9 /* Controller */,
 				20B694882625C48F00A999A9 /* View */,
 				20B694872625C48600A999A9 /* Model */,
@@ -179,11 +229,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				205F637426277DDC005812FF /* Observable.swift in Sources */,
+				205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */,
+				205F635C26274D1D005812FF /* URLRequestHelpers.swift in Sources */,
 				20B6947526235BCD00A999A9 /* Virtual_Tourist.xcdatamodeld in Sources */,
 				20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */,
+				205F636526274D9D005812FF /* CachedDataSource.swift in Sources */,
 				20B6946B26235BCD00A999A9 /* AppDelegate.swift in Sources */,
+				205F635B26274D1D005812FF /* ApiDefinition.swift in Sources */,
 				20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */,
 				20B6948D2625D16200A999A9 /* PhotosViewController.swift in Sources */,
+				205F636126274D8D005812FF /* NetworkDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
