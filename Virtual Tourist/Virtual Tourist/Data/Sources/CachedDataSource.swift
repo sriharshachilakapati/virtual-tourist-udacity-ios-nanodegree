@@ -5,23 +5,32 @@
 //  Created by Sri Harsha Chilakapati on 14/04/21.
 //
 
-import Foundation
 import CoreLocation
+import CoreData
+import UIKit
 
 class CachedDataSource {
-    func fetchPins() -> Observable<[Void]> {
-        fatalError()
+    func fetchPins() -> Observable<[Pin]> {
+        let fetchRequest = NSFetchRequest<Pin>(entityName: "Pin")
+        return ObservableFetchRequest(fetchRequest: fetchRequest)
     }
     
-    func savePins(_ pins: [Void]) {
-        // TODO: Write to the cached data store
+    func addPin(at location: CLLocationCoordinate2D) {
+        let pin = Pin(context: (UIApplication.shared.delegate as! AppDelegate).backgroundContext)
+        pin.latitude = location.latitude
+        pin.longitude = location.longitude
+        
+        let _ = try? pin.managedObjectContext?.save()
     }
     
-    func fetchPhotos(location: CLLocationCoordinate2D) -> Observable<[Void]> {
-        fatalError()
+    func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
+        let fetchRequest = NSFetchRequest<Photo>(entityName: "Photo")
+        fetchRequest.predicate = NSPredicate(format: "pin == %@", pin)
+        
+        return ObservableFetchRequest(fetchRequest: fetchRequest)
     }
     
-    func savePhotos(_ photos: [Void]) {
-        // TODO: Write to the cached data store
+    func savePhotos(_ photos: [Photo], forPin pin: Pin) {
+        // TODO: Write to DB
     }
 }

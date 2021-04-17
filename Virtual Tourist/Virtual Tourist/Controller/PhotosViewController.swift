@@ -12,18 +12,18 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var location: CLLocationCoordinate2D!
+    var selectedPin: Pin!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let annotation = MKPointAnnotation()
-        annotation.coordinate = location
+        annotation.coordinate = CLLocationCoordinate2D(latitude: selectedPin.latitude, longitude: selectedPin.longitude)
         annotation.title = "Selected Location"
         
         mapView.addAnnotation(annotation)
         
-        let camera = MKCoordinateRegion(center: location, latitudinalMeters: 15000, longitudinalMeters: 15000)
+        let camera = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 15000, longitudinalMeters: 15000)
         mapView.setRegion(camera, animated: true)
     }
 }

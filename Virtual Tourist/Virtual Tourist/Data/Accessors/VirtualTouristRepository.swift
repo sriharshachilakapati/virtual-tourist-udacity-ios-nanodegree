@@ -12,25 +12,19 @@ class VirtualTouristRepository {
     let networkDataSource = NetworkDataSource()
     let cachedDataSource = CachedDataSource()
     
-    func fetchPins() -> Observable<[Void]> {
-        let cachedObservable = cachedDataSource.fetchPins()
-        
-        networkDataSource.fetchPins().listenForChanges { [weak self] pins in
-            self?.cachedDataSource.savePins(pins)
-            cachedObservable.dispatchChange(changed: pins)
-        }
-        
-        return cachedObservable
+    func fetchPins() -> Observable<[Pin]> {
+        return cachedDataSource.fetchPins()
     }
     
-    func fetchPhotos(location: CLLocationCoordinate2D) -> Observable<[Void]> {
-        let cachedObservable = cachedDataSource.fetchPhotos(location: location)
-        
-        networkDataSource.fetchPhotos(location: location).listenForChanges { [weak self] photos in
-            self?.cachedDataSource.savePhotos(photos)
-            cachedObservable.dispatchChange(changed: photos)
+    func addPin(at location: CLLocationCoordinate2D) {
+        cachedDataSource.addPin(at: location)
+    }
+    
+    func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
+        networkDataSource.fetchPhotos(forPin: pin).listenForChanges { [weak self] photos in
+            self?.cachedDataSource.savePhotos(photos, forPin: pin)
         }
         
-        return cachedObservable
+        return cachedDataSource.fetchPhotos(forPin: pin)
     }
 }

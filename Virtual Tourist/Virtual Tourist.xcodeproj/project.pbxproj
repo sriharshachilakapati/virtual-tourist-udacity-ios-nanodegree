@@ -13,6 +13,7 @@
 		205F636526274D9D005812FF /* CachedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636426274D9D005812FF /* CachedDataSource.swift */; };
 		205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636F26275196005812FF /* VirtualTouristRepository.swift */; };
 		205F637426277DDC005812FF /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637326277DDC005812FF /* Observable.swift */; };
+		205F637C262B62F1005812FF /* ObservableFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637B262B62F1005812FF /* ObservableFetchRequest.swift */; };
 		20B6946B26235BCD00A999A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946A26235BCD00A999A9 /* AppDelegate.swift */; };
 		20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946C26235BCD00A999A9 /* SceneDelegate.swift */; };
 		20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946E26235BCD00A999A9 /* MapViewController.swift */; };
@@ -31,6 +32,7 @@
 		205F636426274D9D005812FF /* CachedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedDataSource.swift; sourceTree = "<group>"; };
 		205F636F26275196005812FF /* VirtualTouristRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristRepository.swift; sourceTree = "<group>"; };
 		205F637326277DDC005812FF /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		205F637B262B62F1005812FF /* ObservableFetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableFetchRequest.swift; sourceTree = "<group>"; };
 		20B6946726235BCD00A999A9 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20B6946A26235BCD00A999A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B6946C26235BCD00A999A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,8 +71,10 @@
 		205F635726274CE5005812FF /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				205F637326277DDC005812FF /* Observable.swift */,
 				205F635826274D1C005812FF /* ApiDefinition.swift */,
 				205F635A26274D1C005812FF /* URLRequestHelpers.swift */,
+				205F637B262B62F1005812FF /* ObservableFetchRequest.swift */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -80,7 +84,6 @@
 			children = (
 				205F636026274D8D005812FF /* NetworkDataSource.swift */,
 				205F636426274D9D005812FF /* CachedDataSource.swift */,
-				205F637326277DDC005812FF /* Observable.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				205F637426277DDC005812FF /* Observable.swift in Sources */,
 				205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */,
 				205F635C26274D1D005812FF /* URLRequestHelpers.swift in Sources */,
+				205F637C262B62F1005812FF /* ObservableFetchRequest.swift in Sources */,
 				20B6947526235BCD00A999A9 /* Virtual_Tourist.xcdatamodeld in Sources */,
 				20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */,
 				205F636526274D9D005812FF /* CachedDataSource.swift in Sources */,

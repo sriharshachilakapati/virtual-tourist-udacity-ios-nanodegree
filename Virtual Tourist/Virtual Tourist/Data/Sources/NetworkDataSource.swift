@@ -9,11 +9,7 @@ import Foundation
 import CoreLocation
 
 class NetworkDataSource {
-    func fetchPins() -> Observable<[Void]> {
-        fatalError()
-    }
-    
-    func fetchPhotos(location: CLLocationCoordinate2D) -> Observable<[Void]> {
+    func fetchPhotos(forPin: Pin) -> Observable<[Photo]> {
         fatalError()
     }
 }
