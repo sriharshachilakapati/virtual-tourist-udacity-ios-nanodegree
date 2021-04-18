@@ -14,6 +14,9 @@
 		205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F636F26275196005812FF /* VirtualTouristRepository.swift */; };
 		205F637426277DDC005812FF /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637326277DDC005812FF /* Observable.swift */; };
 		205F637C262B62F1005812FF /* ObservableFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637B262B62F1005812FF /* ObservableFetchRequest.swift */; };
+		205F637F262BF789005812FF /* PhotosResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F637E262BF789005812FF /* PhotosResponse.swift */; };
+		205F6382262BFB68005812FF /* PhotosRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6381262BFB68005812FF /* PhotosRequest.swift */; };
+		205F6386262C2D82005812FF /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6385262C2D82005812FF /* PhotoCell.swift */; };
 		20B6946B26235BCD00A999A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946A26235BCD00A999A9 /* AppDelegate.swift */; };
 		20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946C26235BCD00A999A9 /* SceneDelegate.swift */; };
 		20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946E26235BCD00A999A9 /* MapViewController.swift */; };
@@ -33,6 +36,9 @@
 		205F636F26275196005812FF /* VirtualTouristRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristRepository.swift; sourceTree = "<group>"; };
 		205F637326277DDC005812FF /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		205F637B262B62F1005812FF /* ObservableFetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableFetchRequest.swift; sourceTree = "<group>"; };
+		205F637E262BF789005812FF /* PhotosResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosResponse.swift; sourceTree = "<group>"; };
+		205F6381262BFB68005812FF /* PhotosRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosRequest.swift; sourceTree = "<group>"; };
+		205F6385262C2D82005812FF /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		20B6946726235BCD00A999A9 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20B6946A26235BCD00A999A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B6946C26235BCD00A999A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				20B6947326235BCD00A999A9 /* Virtual_Tourist.xcdatamodeld */,
+				205F637E262BF789005812FF /* PhotosResponse.swift */,
+				205F6381262BFB68005812FF /* PhotosRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,6 +158,7 @@
 			children = (
 				20B6946E26235BCD00A999A9 /* MapViewController.swift */,
 				20B6948C2625D16200A999A9 /* PhotosViewController.swift */,
+				205F6385262C2D82005812FF /* PhotoCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -233,8 +242,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				205F637426277DDC005812FF /* Observable.swift in Sources */,
+				205F6386262C2D82005812FF /* PhotoCell.swift in Sources */,
 				205F637026275196005812FF /* VirtualTouristRepository.swift in Sources */,
 				205F635C26274D1D005812FF /* URLRequestHelpers.swift in Sources */,
+				205F637F262BF789005812FF /* PhotosResponse.swift in Sources */,
+				205F6382262BFB68005812FF /* PhotosRequest.swift in Sources */,
 				205F637C262B62F1005812FF /* ObservableFetchRequest.swift in Sources */,
 				20B6947526235BCD00A999A9 /* Virtual_Tourist.xcdatamodeld in Sources */,
 				20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */,

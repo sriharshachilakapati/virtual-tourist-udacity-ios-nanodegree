@@ -21,8 +21,10 @@ class VirtualTouristRepository {
     }
     
     func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
-        networkDataSource.fetchPhotos(forPin: pin).listenForChanges { [weak self] photos in
-            self?.cachedDataSource.savePhotos(photos, forPin: pin)
+        networkDataSource.fetchPhotos(forPin: pin).listenForChanges { photos in
+            DispatchQueue.main.async {
+                self.cachedDataSource.savePhotos(photos, forPin: pin)
+            }
         }
         
         return cachedDataSource.fetchPhotos(forPin: pin)

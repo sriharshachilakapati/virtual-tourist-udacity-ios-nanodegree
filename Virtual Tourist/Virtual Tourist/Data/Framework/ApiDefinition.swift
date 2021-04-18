@@ -13,13 +13,13 @@ struct BinaryResponse: Codable {
     let data: Data
 }
 
-struct ApiDefinition<RequestType: Codable, ResponseType: Codable> {
+struct ApiDefinition<RequestType: Encodable, ResponseType: Decodable> {
     typealias ApiCompletionHandler = (Result<ResponseType, Error>) -> Void
     
     let url: String
     let method: HttpMethod
-    let getDecodableResponseRange: (Data) -> Range<Int>
-    let headers: () -> [String : String]?
+    let getDecodableResponseRange: (Data) -> Range<Int> = { data in 0 ..< data.count }
+    let headers: () -> [String : String]? = { [:] }
     
     func call(withPayload payload: RequestType, completion: @escaping ApiCompletionHandler) {
         performCall(withPayload: payload, andPathParameters: [:], completion: completion)
@@ -27,6 +27,15 @@ struct ApiDefinition<RequestType: Codable, ResponseType: Codable> {
     
     func call(withPathParameters parameters: [String : String], completion: @escaping ApiCompletionHandler) {
         performCall(withPayload: nil, andPathParameters: parameters, completion: completion)
+    }
+    
+    func call<T: Encodable>(withPathParameters parameters: T, completion: @escaping ApiCompletionHandler) {
+        guard let encodedPayload = try? JSONEncoder().encode(parameters) else { return }
+        
+        let paramsJson = (try? JSONSerialization.jsonObject(with: encodedPayload, options: []) as? [String: Any] ?? [:])!
+        let pathParams = paramsJson.mapValues { value in "\(value)" }
+        
+        performCall(withPayload: nil, andPathParameters: pathParams, completion: completion)
     }
     
     func call(completion: @escaping ApiCompletionHandler) {
@@ -37,7 +46,7 @@ struct ApiDefinition<RequestType: Codable, ResponseType: Codable> {
         var urlString = self.url
         
         for pathParameter in pathParameters {
-            urlString = urlString.replacingOccurrences(of: "\(pathParameter.key)", with: pathParameter.value)
+            urlString = urlString.replacingOccurrences(of: "{\(pathParameter.key)}", with: pathParameter.value)
         }
         
         let url = URL(string: urlString)!

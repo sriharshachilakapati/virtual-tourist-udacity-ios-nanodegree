@@ -10,17 +10,19 @@ import CoreData
 import UIKit
 
 class CachedDataSource {
+    private lazy var context = (UIApplication.shared.delegate as! AppDelegate).backgroundContext
+    
     func fetchPins() -> Observable<[Pin]> {
         let fetchRequest = NSFetchRequest<Pin>(entityName: "Pin")
         return ObservableFetchRequest(fetchRequest: fetchRequest)
     }
     
     func addPin(at location: CLLocationCoordinate2D) {
-        let pin = Pin(context: (UIApplication.shared.delegate as! AppDelegate).backgroundContext)
+        let pin = Pin(context: context)
         pin.latitude = location.latitude
         pin.longitude = location.longitude
         
-        let _ = try? pin.managedObjectContext?.save()
+        let _ = try? context.save()
     }
     
     func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
@@ -30,7 +32,23 @@ class CachedDataSource {
         return ObservableFetchRequest(fetchRequest: fetchRequest)
     }
     
-    func savePhotos(_ photos: [Photo], forPin pin: Pin) {
-        // TODO: Write to DB
+    func savePhotos(_ photoDatas: [Data], forPin pin: Pin) {
+        print("Saving \(photoDatas.count) images into database")
+        
+        context.perform {
+            autoreleasepool {
+                for data in photoDatas {
+                    let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: self.context) as! Photo
+                    photo.pin = pin
+                    photo.data = data
+                }
+            }
+                
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+        }
     }
 }

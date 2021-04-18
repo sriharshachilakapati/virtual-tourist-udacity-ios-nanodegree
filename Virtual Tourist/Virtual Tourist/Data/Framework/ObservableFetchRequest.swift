@@ -25,11 +25,13 @@ class ObservableFetchRequest<T: NSFetchRequestResult>: Observable<[T]> {
     }
     
     @objc private func execute() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).backgroundContext
-        
-        context.performAndWait {
-            if let results = try? self.fetchRequest.execute() {
-                self.dispatchChange(changed: results)
+        DispatchQueue.main.async {
+            let context = (UIApplication.shared.delegate as! AppDelegate).backgroundContext
+            
+            context.perform {
+                if let results = try? self.fetchRequest.execute() {
+                    self.dispatchChange(changed: results)
+                }
             }
         }
     }
