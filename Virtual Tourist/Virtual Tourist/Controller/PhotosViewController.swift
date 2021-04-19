@@ -13,6 +13,7 @@ class PhotosViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var noImagesLabel: UILabel!
     
     var selectedPin: Pin!
     
@@ -50,6 +51,7 @@ class PhotosViewController: UIViewController {
                 }
             }
             
+            self.noImagesLabel.isHidden = photos.count != 0
             self.collectionView.reloadData()
         }
     }
