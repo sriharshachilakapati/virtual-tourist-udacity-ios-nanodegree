@@ -35,14 +35,13 @@ class PhotosViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         
-        fetchImageObservable = repository.fetchPhotos(forPin: selectedPin)
-        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:))
+        fetchImages(forceDownload: false)
     }
     
     private func handlePhotosChanged(photos: [Photo]) {
-        images = [UIImage]()
-        
         DispatchQueue.main.async {
+            self.images = [UIImage]()
+            
             print("Got \(photos.count) after update")
             
             for photo in photos {
@@ -53,6 +52,15 @@ class PhotosViewController: UIViewController {
             
             self.collectionView.reloadData()
         }
+    }
+    
+    @IBAction func onNewCollectionButtonClicked() {
+        fetchImages(forceDownload: true)
+    }
+    
+    private func fetchImages(forceDownload: Bool) {
+        fetchImageObservable = repository.fetchPhotos(forPin: selectedPin, forceFetch: forceDownload)
+        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:))
     }
 }
 

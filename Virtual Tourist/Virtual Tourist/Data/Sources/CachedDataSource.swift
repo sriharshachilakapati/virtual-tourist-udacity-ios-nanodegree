@@ -36,6 +36,18 @@ class CachedDataSource {
         print("Saving \(photoDatas.count) images into database")
         
         context.perform {
+            // Clear existing photos
+            let fetchRequest = NSFetchRequest<Photo>(entityName: Photo.entity().name!)
+            fetchRequest.propertiesToFetch = []
+            fetchRequest.predicate = NSPredicate(format: "pin == %@", pin)
+            
+            if let photos = try? fetchRequest.execute() {
+                for photo in photos {
+                    self.context.delete(photo)
+                }
+            }
+            
+            // Create descriptions for new photos
             autoreleasepool {
                 for data in photoDatas {
                     let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: self.context) as! Photo
@@ -43,7 +55,8 @@ class CachedDataSource {
                     photo.data = data
                 }
             }
-                
+            
+            // Save the context
             do {
                 try self.context.save()
             } catch {

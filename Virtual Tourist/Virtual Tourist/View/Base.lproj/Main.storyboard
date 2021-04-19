@@ -50,21 +50,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="INj-M6-LcP">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvX-OV-edx">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lrR-oI-lXz"/>
+                                    <barButtonItem title="New Collection" id="oIg-CR-qCb">
+                                        <connections>
+                                            <action selector="onNewCollectionButtonClicked" destination="xQa-hT-78v" id="o4I-ei-Wte"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7Fr-Pw-MCG"/>
+                                </items>
+                            </toolbar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="INj-M6-LcP">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6hi-Dx-cSt">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="574"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="5ub-zO-rrs"/>
+                                            <constraint firstAttribute="height" constant="200" id="6We-fr-8JI"/>
                                         </constraints>
                                     </mapView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="248" verticalCompressionResistancePriority="752" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rmv-v5-gfA">
-                                        <rect key="frame" x="0.0" y="574" width="414" height="200"/>
+                                        <rect key="frame" x="0.0" y="200" width="414" height="525"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="iLU-Bq-UiE"/>
-                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UC3-Hx-dr9">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -103,10 +112,13 @@
                         <viewLayoutGuide key="safeArea" id="hWo-wO-F43"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="hWo-wO-F43" firstAttribute="bottom" secondItem="INj-M6-LcP" secondAttribute="bottom" id="jtg-FL-PQD"/>
-                            <constraint firstItem="INj-M6-LcP" firstAttribute="leading" secondItem="hWo-wO-F43" secondAttribute="leading" id="n0B-N7-uPs"/>
-                            <constraint firstItem="hWo-wO-F43" firstAttribute="trailing" secondItem="INj-M6-LcP" secondAttribute="trailing" id="q62-5A-Cij"/>
-                            <constraint firstItem="INj-M6-LcP" firstAttribute="top" secondItem="hWo-wO-F43" secondAttribute="top" id="vkH-8N-Rna"/>
+                            <constraint firstItem="RvX-OV-edx" firstAttribute="top" secondItem="INj-M6-LcP" secondAttribute="bottom" id="CoU-sF-wWI"/>
+                            <constraint firstItem="INj-M6-LcP" firstAttribute="trailing" secondItem="hWo-wO-F43" secondAttribute="trailing" id="GM0-ty-AcC"/>
+                            <constraint firstItem="INj-M6-LcP" firstAttribute="top" secondItem="hWo-wO-F43" secondAttribute="top" id="Nyb-0l-n6N"/>
+                            <constraint firstItem="RvX-OV-edx" firstAttribute="leading" secondItem="Ko2-eR-vhH" secondAttribute="leading" id="YOI-C9-K6m"/>
+                            <constraint firstItem="RvX-OV-edx" firstAttribute="trailing" secondItem="hWo-wO-F43" secondAttribute="trailing" id="aoj-kr-IyB"/>
+                            <constraint firstItem="INj-M6-LcP" firstAttribute="leading" secondItem="hWo-wO-F43" secondAttribute="leading" id="kyJ-g6-TYM"/>
+                            <constraint firstItem="RvX-OV-edx" firstAttribute="bottom" secondItem="hWo-wO-F43" secondAttribute="bottom" id="twp-JM-0ij"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NEN-pL-5ev"/>
@@ -117,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MUf-hQ-SOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1812" y="138"/>
+            <point key="canvasLocation" x="1811.594202898551" y="137.94642857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yPD-s4-GDu">
