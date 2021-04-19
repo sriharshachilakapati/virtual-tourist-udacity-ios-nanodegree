@@ -64,4 +64,11 @@ class CachedDataSource {
             }
         }
     }
+    
+    func deletePhoto(_ photo: Photo) {
+        context.perform {
+            self.context.delete(photo)
+            let _ = try? self.context.save()
+        }
+    }
 }

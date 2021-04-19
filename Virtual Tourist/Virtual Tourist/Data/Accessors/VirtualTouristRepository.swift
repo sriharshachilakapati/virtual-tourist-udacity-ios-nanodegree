@@ -36,6 +36,10 @@ class VirtualTouristRepository {
         return observable
     }
     
+    func deletePhoto(_ photo: Photo) {
+        cachedDataSource.deletePhoto(photo)
+    }
+    
     private func downloadPhotos(forPin pin: Pin) {
         networkDataSource.fetchPhotos(forPin: pin).listenOnce { photos in
             DispatchQueue.main.async {

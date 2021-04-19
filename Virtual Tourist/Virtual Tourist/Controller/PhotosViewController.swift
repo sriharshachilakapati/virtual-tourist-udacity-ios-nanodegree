@@ -18,6 +18,7 @@ class PhotosViewController: UIViewController {
     var selectedPin: Pin!
     
     private var images = [UIImage]()
+    private var photos = [Photo]()
     private var fetchImageObservable: Observable<[Photo]>!
     
     override func viewDidLoad() {
@@ -41,13 +42,15 @@ class PhotosViewController: UIViewController {
     
     private func handlePhotosChanged(photos: [Photo]) {
         DispatchQueue.main.async {
-            self.images = [UIImage]()
+            self.images.removeAll()
+            self.photos.removeAll()
             
             print("Got \(photos.count) after update")
             
             for photo in photos {
                 if let image = UIImage(data: photo.data!) {
                     self.images.append(image)
+                    self.photos.append(photo)
                 }
             }
             
@@ -81,5 +84,9 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = 128
         return CGSize(width: width, height: width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        repository.deletePhoto(photos[indexPath.row])
     }
 }
