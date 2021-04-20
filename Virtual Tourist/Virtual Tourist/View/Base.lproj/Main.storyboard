@@ -102,14 +102,42 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="One-3S-1zF" userLabel="ActivityIndicatorViewWrapper">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="525"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mbQ-90-YVD">
+                                                        <rect key="frame" x="128" y="234" width="158.5" height="57.5"/>
+                                                        <subviews>
+                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="PJv-U8-piY">
+                                                                <rect key="frame" x="60.5" y="0.0" width="37" height="37"/>
+                                                            </activityIndicatorView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbt-Vb-Sfl">
+                                                                <rect key="frame" x="0.0" y="37" width="158.5" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstItem="mbQ-90-YVD" firstAttribute="centerX" secondItem="One-3S-1zF" secondAttribute="centerX" id="Iru-y4-VLq"/>
+                                                    <constraint firstItem="mbQ-90-YVD" firstAttribute="centerY" secondItem="One-3S-1zF" secondAttribute="centerY" id="cv4-5L-Xgq"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="One-3S-1zF" firstAttribute="trailing" secondItem="0yL-xx-Lhs" secondAttribute="trailing" id="C3b-Ax-6AO"/>
                                             <constraint firstItem="Rmv-v5-gfA" firstAttribute="leading" secondItem="0yL-xx-Lhs" secondAttribute="leading" id="HCl-RK-0DO"/>
                                             <constraint firstItem="Rmv-v5-gfA" firstAttribute="trailing" secondItem="0yL-xx-Lhs" secondAttribute="trailing" id="OLI-Ne-Nmg"/>
                                             <constraint firstItem="dez-g1-Pvd" firstAttribute="centerX" secondItem="0yL-xx-Lhs" secondAttribute="centerX" id="Qo7-Kq-QZh"/>
                                             <constraint firstItem="dez-g1-Pvd" firstAttribute="centerY" secondItem="0yL-xx-Lhs" secondAttribute="centerY" id="XDc-Tq-MNF"/>
                                             <constraint firstItem="Rmv-v5-gfA" firstAttribute="top" secondItem="0yL-xx-Lhs" secondAttribute="top" id="cTo-XV-LSD"/>
+                                            <constraint firstItem="One-3S-1zF" firstAttribute="leading" secondItem="0yL-xx-Lhs" secondAttribute="leading" id="oNA-Eh-wKT"/>
+                                            <constraint firstItem="One-3S-1zF" firstAttribute="bottom" secondItem="0yL-xx-Lhs" secondAttribute="bottom" id="rwn-qc-ihI"/>
+                                            <constraint firstItem="One-3S-1zF" firstAttribute="top" secondItem="0yL-xx-Lhs" secondAttribute="top" id="tiJ-Af-QsJ"/>
                                             <constraint firstItem="Rmv-v5-gfA" firstAttribute="bottom" secondItem="0yL-xx-Lhs" secondAttribute="bottom" id="ysT-FN-gIU"/>
                                         </constraints>
                                     </view>
@@ -143,14 +171,16 @@
                     </view>
                     <navigationItem key="navigationItem" id="NEN-pL-5ev"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="One-3S-1zF" id="OA1-Z0-C8s"/>
                         <outlet property="collectionView" destination="Rmv-v5-gfA" id="XGk-H5-QJD"/>
                         <outlet property="mapView" destination="6hi-Dx-cSt" id="kdV-3X-1Hg"/>
+                        <outlet property="newCollectionButton" destination="oIg-CR-qCb" id="gWU-Uh-cSJ"/>
                         <outlet property="noImagesLabel" destination="dez-g1-Pvd" id="pBc-Uc-BVX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MUf-hQ-SOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1811.594202898551" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1822" y="138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yPD-s4-GDu">

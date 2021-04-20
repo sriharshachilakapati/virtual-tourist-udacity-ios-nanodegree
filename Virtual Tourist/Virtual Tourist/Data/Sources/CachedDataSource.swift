@@ -13,7 +13,7 @@ class CachedDataSource {
     private lazy var context = (UIApplication.shared.delegate as! AppDelegate).backgroundContext
     
     func fetchPins() -> Observable<[Pin]> {
-        let fetchRequest = NSFetchRequest<Pin>(entityName: "Pin")
+        let fetchRequest = NSFetchRequest<Pin>(entityName: String(describing: Pin.self))
         return ObservableFetchRequest(fetchRequest: fetchRequest)
     }
     
@@ -25,21 +25,33 @@ class CachedDataSource {
         let _ = try? context.save()
     }
     
-    func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
-        let fetchRequest = NSFetchRequest<Photo>(entityName: "Photo")
+    private func getPhotosFetchRequest(for pin: Pin) -> NSFetchRequest<Photo> {
+        let fetchRequest = NSFetchRequest<Photo>(entityName: String(describing: Photo.self))
         fetchRequest.predicate = NSPredicate(format: "pin == %@", pin)
-        
-        return ObservableFetchRequest(fetchRequest: fetchRequest)
+        return fetchRequest
+    }
+    
+    func fetchPhotos(forPin pin: Pin) -> Observable<[Photo]> {
+        return ObservableFetchRequest(fetchRequest: getPhotosFetchRequest(for: pin))
+    }
+    
+    func getPhotoCount(for pin: Pin) -> Int {
+        return (try? context.count(for: getPhotosFetchRequest(for: pin))) ?? 0
     }
     
     func savePhotos(_ photoDatas: [Data], forPin pin: Pin) {
         print("Saving \(photoDatas.count) images into database")
         
+        // Special case: We want to be notified even for 0 photos
+        if photoDatas.count == 0 {
+            NotificationCenter.default.post(.init(name: .NSManagedObjectContextObjectsDidChange))
+            return
+        }
+        
         context.perform {
             // Clear existing photos
-            let fetchRequest = NSFetchRequest<Photo>(entityName: Photo.entity().name!)
+            let fetchRequest = self.getPhotosFetchRequest(for: pin)
             fetchRequest.propertiesToFetch = []
-            fetchRequest.predicate = NSPredicate(format: "pin == %@", pin)
             
             if let photos = try? fetchRequest.execute() {
                 for photo in photos {
@@ -50,7 +62,7 @@ class CachedDataSource {
             // Create descriptions for new photos
             autoreleasepool {
                 for data in photoDatas {
-                    let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: self.context) as! Photo
+                    let photo = NSEntityDescription.insertNewObject(forEntityName: String(describing: Photo.self), into: self.context) as! Photo
                     photo.pin = pin
                     photo.data = data
                 }

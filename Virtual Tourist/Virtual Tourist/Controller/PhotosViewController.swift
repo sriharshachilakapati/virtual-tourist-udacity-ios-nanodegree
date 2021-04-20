@@ -14,12 +14,15 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var noImagesLabel: UILabel!
+    @IBOutlet weak var activityIndicatorView: UIView!
+    @IBOutlet weak var newCollectionButton: UIBarButtonItem!
     
     var selectedPin: Pin!
     
     private var images = [UIImage]()
     private var photos = [Photo]()
     private var fetchImageObservable: Observable<[Photo]>!
+    private var isFetchingImages = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +48,13 @@ class PhotosViewController: UIViewController {
             self.images.removeAll()
             self.photos.removeAll()
             
+            if !self.isFetchingImages {
+                self.activityIndicatorView.isHidden = true
+                self.newCollectionButton.isEnabled = true
+            }
+            
+            self.isFetchingImages = false
+            
             print("Got \(photos.count) after update")
             
             for photo in photos {
@@ -56,6 +66,7 @@ class PhotosViewController: UIViewController {
             
             self.noImagesLabel.isHidden = photos.count != 0
             self.collectionView.reloadData()
+            self.collectionView.setContentOffset(.zero, animated: true)
         }
     }
     
@@ -64,7 +75,9 @@ class PhotosViewController: UIViewController {
     }
     
     private func fetchImages(forceDownload: Bool) {
-        fetchImageObservable = repository.fetchPhotos(forPin: selectedPin, forceFetch: forceDownload)
+        activityIndicatorView.isHidden = false
+        newCollectionButton.isEnabled = false
+        (fetchImageObservable, isFetchingImages) = repository.fetchPhotos(forPin: selectedPin, forceFetch: forceDownload)
         fetchImageObservable.listenForChanges(handlePhotosChanged(photos:))
     }
 }

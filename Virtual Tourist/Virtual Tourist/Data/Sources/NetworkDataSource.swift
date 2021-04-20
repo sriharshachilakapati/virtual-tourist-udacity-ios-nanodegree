@@ -40,6 +40,12 @@ class NetworkDataSource {
         var numImagesFetched = 0
         var photos = [Data]()
         
+        // Special case if there are no photos
+        if photoInfos.count == 0 {
+            observable.dispatchChange(changed: photos)
+            return
+        }
+        
         for photoInfo in photoInfos {
             getImageDataApi.call(withPathParameters: photoInfo) { result in
                 numImagesFetched += 1
