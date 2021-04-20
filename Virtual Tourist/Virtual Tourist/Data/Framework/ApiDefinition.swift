@@ -7,12 +7,18 @@
 
 import Foundation
 
+/// A request type to use when you don't want to send any parameters in the API call. This applies only to Query
+/// parameters for `GET` and `DELETE` requests and to HTTP Payload attached to `POST` requests.
 typealias NilRequest = [String:String]
 
+/// A response type that wraps the binary data. To be used if you are downloading a file for example.
 struct BinaryResponse: Codable {
     let data: Data
 }
 
+/// A definition for an API. This allows to define the API in a declarative manner and then use those declarations to
+/// make the calls. Supports multiple HTTP methods and also auto-mapping of requests to either query parameters or HTTP
+/// body depending on the method to be used.
 struct ApiDefinition<RequestType: Encodable, ResponseType: Decodable> {
     typealias ApiCompletionHandler = (Result<ResponseType, Error>) -> Void
     
@@ -21,14 +27,20 @@ struct ApiDefinition<RequestType: Encodable, ResponseType: Decodable> {
     let getDecodableResponseRange: (Data) -> Range<Int> = { data in 0 ..< data.count }
     let headers: () -> [String : String]? = { [:] }
     
+    /// Calls the API endpoint with a `payload` and returns the response in a `completion` handler.
+    /// - Parameters:
+    ///   - payload: The payload to be sent to the API.
+    ///   - completion: The completion handler which will be invoked with the API result.
     func call(withPayload payload: RequestType, completion: @escaping ApiCompletionHandler) {
         performCall(withPayload: payload, andPathParameters: [:], completion: completion)
     }
     
-    func call(withPathParameters parameters: [String : String], completion: @escaping ApiCompletionHandler) {
-        performCall(withPayload: nil, andPathParameters: parameters, completion: completion)
-    }
-    
+    /// Calls the API endpoint with some `pathParameters` and returns the response in a `completion` handler. This uses
+    /// an `Encodable` for the parameters and any `{varName}` in the URL will be replaced with the value of
+    /// `parameters.varName` in the URL.
+    /// - Parameters:
+    ///   - parameters: An `Encodable` struct which contains values to be replaced with.
+    ///   - completion: The completion handler which will be invoked with the API result.
     func call<T: Encodable>(withPathParameters parameters: T, completion: @escaping ApiCompletionHandler) {
         guard let encodedPayload = try? JSONEncoder().encode(parameters) else { return }
         
@@ -38,10 +50,11 @@ struct ApiDefinition<RequestType: Encodable, ResponseType: Decodable> {
         performCall(withPayload: nil, andPathParameters: pathParams, completion: completion)
     }
     
-    func call(completion: @escaping ApiCompletionHandler) {
-        performCall(withPayload: nil, andPathParameters: [:], completion: completion)
-    }
-    
+    /// Calls the API endpoint with some `payload`, `pathParameters` and returns the response in a `completion` handler.
+    /// - Parameters:
+    ///   - payload: The payload that needs to be sent across the network.
+    ///   - pathParameters: The parameters which needs to be replaced in URL to make it a valid URL.
+    ///   - completion: The completion handler which will be invoked with the API result.
     private func performCall(withPayload payload: RequestType?, andPathParameters pathParameters: [String : String], completion: @escaping ApiCompletionHandler) {
         var urlString = self.url
         
@@ -110,6 +123,7 @@ struct ApiDefinition<RequestType: Encodable, ResponseType: Decodable> {
     }
 }
 
+/// The method to be used to make a HTTP request.
 enum HttpMethod: String {
     case get = "GET"
     case post = "POST"
