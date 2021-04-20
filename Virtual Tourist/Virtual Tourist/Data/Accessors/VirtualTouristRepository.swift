@@ -33,7 +33,7 @@ class VirtualTouristRepository {
     }
     
     private func fetchPhotosFromCache(for pin: Pin) -> Observable<PhotoFetchProgress> {
-        return cachedDataSource.fetchPhotos(forPin: pin).map { photos in (photos, true) }
+        return Observable<[Photo]>.map(source: cachedDataSource.fetchPhotos(forPin: pin)) { photos in (photos, true) }
     }
     
     private func fetchPhotosFromNetwork(for pin: Pin) -> Observable<PhotoFetchProgress> {

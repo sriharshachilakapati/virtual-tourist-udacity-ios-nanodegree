@@ -68,11 +68,11 @@ class Observable<T> {
     /// Creates a new `Observable` that maps the value to another type.
     /// - Parameter function: A function that transforms current type to another.
     /// - Returns: New Observable that emits the transformed value.
-    func map<R>(function: @escaping (T) -> R) -> Observable<R> {
-        let newObservable = Observable<R>()
+    static func map<T, R>(source: Observable<T>, function: @escaping (T) -> R) -> Observable<R> {
+        let newObservable = Observable<R>(livingAlongWith: source)
         
-        listenForChanges { item in
-            newObservable.dispatchChange(changed: function(item))
+        source.listenForChanges { [weak newObservable] item in
+            newObservable?.dispatchChange(changed: function(item))
         }
         
         return newObservable
