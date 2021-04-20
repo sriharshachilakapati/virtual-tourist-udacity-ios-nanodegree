@@ -22,6 +22,11 @@ class Observable<T> {
     private var oneTimeListeners = [ChangeListener]()
     private var pendingUpdate: T?
     
+    private let livingAlongWith: AnyObject?
+    
+    init(livingAlongWith object: AnyObject? = nil) {
+        self.livingAlongWith = object
+    }
     
     /// Register a listener that will listen to changes to the item it carries.
     /// - Parameter listener: A `ChangeListener` that is invoked when any change happens to the item.
@@ -58,5 +63,18 @@ class Observable<T> {
         }
         
         listeners.forEach { listener in listener(changed) }
+    }
+    
+    /// Creates a new `Observable` that maps the value to another type.
+    /// - Parameter function: A function that transforms current type to another.
+    /// - Returns: New Observable that emits the transformed value.
+    func map<R>(function: @escaping (T) -> R) -> Observable<R> {
+        let newObservable = Observable<R>()
+        
+        listenForChanges { item in
+            newObservable.dispatchChange(changed: function(item))
+        }
+        
+        return newObservable
     }
 }

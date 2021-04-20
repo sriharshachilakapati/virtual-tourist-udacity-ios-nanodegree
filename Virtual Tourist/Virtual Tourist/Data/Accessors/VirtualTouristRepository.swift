@@ -8,6 +8,8 @@
 import Foundation
 import CoreLocation
 
+typealias PhotoFetchProgress = (photos: [Photo], didFetchFinish: Bool)
+
 class VirtualTouristRepository {
     let networkDataSource = NetworkDataSource()
     let cachedDataSource = CachedDataSource()
@@ -20,27 +22,53 @@ class VirtualTouristRepository {
         cachedDataSource.addPin(at: location)
     }
     
-    func fetchPhotos(forPin pin: Pin, forceFetch: Bool) -> (Observable<[Photo]>, Bool) {
-        let observable = cachedDataSource.fetchPhotos(forPin: pin)
-        let fetchingImages = forceFetch || (cachedDataSource.getPhotoCount(for: pin) == 0)
+    func fetchPhotos(for pin: Pin, forceFetch: Bool) -> Observable<PhotoFetchProgress> {
+        let shouldFetchFromNetwork = forceFetch || (cachedDataSource.getPhotoCount(for: pin) == 0)
         
-        if fetchingImages {
-            downloadPhotos(forPin: pin)
+        if shouldFetchFromNetwork {
+            return fetchPhotosFromNetwork(for: pin)
         }
         
-        return (observable, fetchingImages)
+        return fetchPhotosFromCache(for: pin)
+    }
+    
+    private func fetchPhotosFromCache(for pin: Pin) -> Observable<PhotoFetchProgress> {
+        return cachedDataSource.fetchPhotos(forPin: pin).map { photos in (photos, true) }
+    }
+    
+    private func fetchPhotosFromNetwork(for pin: Pin) -> Observable<PhotoFetchProgress> {
+        cachedDataSource.clearPhotos(for: pin)
+        
+        let cachedPhotosObservable = self.cachedDataSource.fetchPhotos(forPin: pin)
+        let observable = Observable<PhotoFetchProgress>(livingAlongWith: cachedPhotosObservable)
+        
+        networkDataSource.fetchPhotoInfos(forPin: pin).listenOnce { photoInfos in
+            // If there are no photos in server
+            if photoInfos.count == 0 {
+                observable.dispatchChange(changed: (photos: [], didFetchFinish: true))
+            }
+            
+            var numFailed = 0
+            
+            // Setup an observable from cache
+            cachedPhotosObservable.listenForChanges { photos in
+                let isFinished = photoInfos.count == (numFailed + photos.count)
+                observable.dispatchChange(changed: (photos: photos, didFetchFinish: isFinished))
+            }
+            
+            // Start downloading photos
+            for photoInfo in photoInfos {
+                self.networkDataSource.fetchPhoto(info: photoInfo) { data in
+                    guard let data = data else { numFailed += 1; return }
+                    self.cachedDataSource.savePhoto(data: data, for: pin)
+                }
+            }
+        }
+        
+        return observable
     }
     
     func deletePhoto(_ photo: Photo) {
         cachedDataSource.deletePhoto(photo)
-    }
-    
-    private func downloadPhotos(forPin pin: Pin) {
-        networkDataSource.fetchPhotos(forPin: pin).listenOnce { photos in
-            DispatchQueue.main.async {
-                print("Saving \(photos.count) photos")
-                self.cachedDataSource.savePhotos(photos, forPin: pin)
-            }
-        }
     }
 }

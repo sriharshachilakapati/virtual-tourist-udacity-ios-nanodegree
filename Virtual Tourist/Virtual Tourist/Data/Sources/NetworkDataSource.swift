@@ -19,49 +19,33 @@ class NetworkDataSource {
         method: .get
     )
     
-    func fetchPhotos(forPin pin: Pin) -> Observable<[Data]> {
-        let observable = Observable<[Data]>()
+    func fetchPhotoInfos(forPin pin: Pin) -> Observable<[PhotoInfo]> {
+        let observable = Observable<[PhotoInfo]>()
         let request = PhotosRequest(lat: pin.latitude, lon: pin.longitude)
         
         getImagesForLocationApi.call(withPayload: request) { result in
-            switch (result) {
+            switch result {
                 case .failure(let error):
+                    observable.dispatchChange(changed: [])
                     print(error)
                     
                 case .success(let response):
-                    self.fetchPhotos(response.photos.photo, observable: observable)
+                    observable.dispatchChange(changed: response.photos.photo)
             }
         }
         
         return observable
     }
     
-    private func fetchPhotos(_ photoInfos: [PhotoInfo], observable: Observable<[Data]>) {
-        var numImagesFetched = 0
-        var photos = [Data]()
-        
-        // Special case if there are no photos
-        if photoInfos.count == 0 {
-            observable.dispatchChange(changed: photos)
-            return
-        }
-        
-        for photoInfo in photoInfos {
-            getImageDataApi.call(withPathParameters: photoInfo) { result in
-                numImagesFetched += 1
-                
-                switch (result) {
-                    case .failure(let error):
-                        print(error)
-                        
-                    case .success(let response):
-                        photos.append(response.data)
-                        
-                        if numImagesFetched == photoInfos.count {
-                            print("Downloaded \(numImagesFetched) images")
-                            observable.dispatchChange(changed: photos)
-                        }
-                }
+    func fetchPhoto(info: PhotoInfo, completion: @escaping (Data?) -> Void) {
+        getImageDataApi.call(withPathParameters: info) { result in
+            switch result {
+                case .failure(let error):
+                    print(error)
+                    completion(nil)
+                    
+                case .success(let response):
+                    completion(response.data)
             }
         }
     }

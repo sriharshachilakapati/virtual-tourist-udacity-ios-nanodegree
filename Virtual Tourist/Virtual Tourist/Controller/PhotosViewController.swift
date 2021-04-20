@@ -21,8 +21,7 @@ class PhotosViewController: UIViewController {
     
     private var images = [UIImage]()
     private var photos = [Photo]()
-    private var fetchImageObservable: Observable<[Photo]>!
-    private var isFetchingImages = false
+    private var fetchImageObservable: Observable<PhotoFetchProgress>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,30 +42,27 @@ class PhotosViewController: UIViewController {
         fetchImages(forceDownload: false)
     }
     
-    private func handlePhotosChanged(photos: [Photo]) {
+    private func handlePhotosChanged(photos: [Photo], didFetchFinish: Bool) {
         DispatchQueue.main.async {
             self.images.removeAll()
             self.photos.removeAll()
             
-            if !self.isFetchingImages {
-                self.activityIndicatorView.isHidden = true
-                self.newCollectionButton.isEnabled = true
-            }
-            
-            self.isFetchingImages = false
-            
-            print("Got \(photos.count) after update")
+            print("Got \(photos.count) after update. Finished is \(didFetchFinish)")
             
             for photo in photos {
-                if let image = UIImage(data: photo.data!) {
+                if let data = photo.data, let image = UIImage(data: data) {
                     self.images.append(image)
                     self.photos.append(photo)
                 }
             }
             
+            if didFetchFinish {
+                self.activityIndicatorView.isHidden = true
+                self.newCollectionButton.isEnabled = true
+            }
+            
             self.noImagesLabel.isHidden = photos.count != 0
             self.collectionView.reloadData()
-            self.collectionView.setContentOffset(.zero, animated: true)
         }
     }
     
@@ -77,8 +73,8 @@ class PhotosViewController: UIViewController {
     private func fetchImages(forceDownload: Bool) {
         activityIndicatorView.isHidden = false
         newCollectionButton.isEnabled = false
-        (fetchImageObservable, isFetchingImages) = repository.fetchPhotos(forPin: selectedPin, forceFetch: forceDownload)
-        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:))
+        fetchImageObservable = repository.fetchPhotos(for: selectedPin, forceFetch: forceDownload)
+        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:didFetchFinish:))
     }
 }
 

@@ -39,17 +39,8 @@ class CachedDataSource {
         return (try? context.count(for: getPhotosFetchRequest(for: pin))) ?? 0
     }
     
-    func savePhotos(_ photoDatas: [Data], forPin pin: Pin) {
-        print("Saving \(photoDatas.count) images into database")
-        
-        // Special case: We want to be notified even for 0 photos
-        if photoDatas.count == 0 {
-            NotificationCenter.default.post(.init(name: .NSManagedObjectContextObjectsDidChange))
-            return
-        }
-        
+    func clearPhotos(for pin: Pin) {
         context.perform {
-            // Clear existing photos
             let fetchRequest = self.getPhotosFetchRequest(for: pin)
             fetchRequest.propertiesToFetch = []
             
@@ -59,21 +50,20 @@ class CachedDataSource {
                 }
             }
             
-            // Create descriptions for new photos
-            autoreleasepool {
-                for data in photoDatas {
-                    let photo = NSEntityDescription.insertNewObject(forEntityName: String(describing: Photo.self), into: self.context) as! Photo
-                    photo.pin = pin
-                    photo.data = data
-                }
-            }
+            try! self.context.save()
+        }
+    }
+    
+    func savePhoto(data: Data, for pin: Pin) {
+        context.perform {
+            let photo = NSEntityDescription.insertNewObject(
+                forEntityName: String(describing: Photo.self),
+                into: self.context) as! Photo
             
-            // Save the context
-            do {
-                try self.context.save()
-            } catch {
-                print(error)
-            }
+            photo.pin = pin
+            photo.data = data
+            
+            try! self.context.save()
         }
     }
     
