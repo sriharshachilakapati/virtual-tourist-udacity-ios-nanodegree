@@ -42,18 +42,18 @@ class PhotosViewController: UIViewController {
         fetchImages(forceDownload: false)
     }
     
-    private func handlePhotosChanged(photos: [Photo], didFetchFinish: Bool) {
+    private func handlePhotosChanged(photos: [Photo], totalCount: Int) {
         DispatchQueue.main.async {
-            print("Got \(photos.count) after update. Finished is \(didFetchFinish)")
+            print("Got \(photos.count) after update. Finished is \(totalCount == photos.count)")
             self.photoImageCoordinator.photos = photos
             
-            if didFetchFinish {
+            if totalCount == photos.count {
                 self.activityIndicatorView.isHidden = true
                 self.newCollectionButton.isEnabled = true
             }
             
             self.noImagesLabel.isHidden = photos.count != 0
-            self.photoImageCoordinator.applyChanges(to: self.collectionView)
+            self.photoImageCoordinator.applyChanges(to: self.collectionView, totalCount: totalCount)
         }
     }
     
@@ -65,20 +65,26 @@ class PhotosViewController: UIViewController {
         activityIndicatorView.isHidden = false
         newCollectionButton.isEnabled = false
         fetchImageObservable = repository.fetchPhotos(for: selectedPin, forceFetch: forceDownload)
-        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:didFetchFinish:))
+        fetchImageObservable.listenForChanges(handlePhotosChanged(photos:totalCount:))
     }
 }
 
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        cell.photoImageView.image = photoImageCoordinator.images[indexPath.row]
+        
+        if indexPath.row < photoImageCoordinator.images.count {
+            cell.setImage(image: photoImageCoordinator.images[indexPath.row])
+        } else {
+            cell.setImage(image: nil)
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Reloading collectionView: Count is \(photoImageCoordinator.images.count)")
-        return photoImageCoordinator.images.count
+        print("Reloading collectionView: Count is \(photoImageCoordinator.images.count + photoImageCoordinator.numPlaceHolders)")
+        return photoImageCoordinator.images.count + photoImageCoordinator.numPlaceHolders
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

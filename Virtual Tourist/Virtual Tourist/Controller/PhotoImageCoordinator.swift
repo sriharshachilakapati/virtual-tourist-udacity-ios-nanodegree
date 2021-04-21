@@ -16,6 +16,7 @@ class PhotoImageCoordinator {
     
     var images = [UIImage]()
     var changes = [Change]()
+    var numPlaceHolders = 0
     
     var photos: [Photo] = [] {
         didSet {
@@ -23,8 +24,17 @@ class PhotoImageCoordinator {
         }
     }
     
-    func applyChanges(to collectionView: UICollectionView) {
+    func applyChanges(to collectionView: UICollectionView, totalCount: Int) {
+        if totalCount != photos.count + numPlaceHolders {
+            // Add enough insertions to cover changes
+            numPlaceHolders = totalCount - images.count
+            collectionView.reloadData()
+            
+            return
+        }
+        
         collectionView.performBatchUpdates({
+            // Perform diff changes
             for change in changes {
                 switch change {
                     case .insert(at: let index):

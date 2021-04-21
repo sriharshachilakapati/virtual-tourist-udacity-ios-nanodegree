@@ -94,15 +94,21 @@
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g1J-rN-5IS">
                                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                                 </imageView>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="k8g-yH-UJs">
+                                                                    <rect key="frame" x="45.5" y="45.5" width="37" height="37"/>
+                                                                </activityIndicatorView>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="g1J-rN-5IS" firstAttribute="top" secondItem="Ctv-Gx-HNe" secondAttribute="top" id="NM6-IT-Gu6"/>
                                                                 <constraint firstItem="g1J-rN-5IS" firstAttribute="leading" secondItem="Ctv-Gx-HNe" secondAttribute="leading" id="R4M-sy-GMb"/>
                                                                 <constraint firstItem="g1J-rN-5IS" firstAttribute="bottom" secondItem="Ctv-Gx-HNe" secondAttribute="bottomMargin" constant="8" id="e5W-14-yfB"/>
+                                                                <constraint firstItem="k8g-yH-UJs" firstAttribute="centerY" secondItem="Ctv-Gx-HNe" secondAttribute="centerY" id="j20-1T-O0y"/>
                                                                 <constraint firstItem="g1J-rN-5IS" firstAttribute="trailing" secondItem="Ctv-Gx-HNe" secondAttribute="trailingMargin" constant="8" id="ozD-hr-M3x"/>
+                                                                <constraint firstItem="k8g-yH-UJs" firstAttribute="centerX" secondItem="Ctv-Gx-HNe" secondAttribute="centerX" id="vhP-5r-oT6"/>
                                                             </constraints>
                                                         </collectionViewCellContentView>
                                                         <connections>
+                                                            <outlet property="activityIndicatorView" destination="k8g-yH-UJs" id="9Iv-3Y-xOM"/>
                                                             <outlet property="photoImageView" destination="g1J-rN-5IS" id="9wk-kl-I9a"/>
                                                         </connections>
                                                     </collectionViewCell>
