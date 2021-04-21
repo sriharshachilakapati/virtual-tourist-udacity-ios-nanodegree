@@ -91,6 +91,8 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        mapView.deselectAnnotation(view.annotation, animated: true)
+
         let coordinate = view.annotation!.coordinate
         self.selectedPin = pins.filter { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }.first!
         
