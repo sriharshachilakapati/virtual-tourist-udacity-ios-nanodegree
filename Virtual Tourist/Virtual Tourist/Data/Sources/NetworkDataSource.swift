@@ -19,9 +19,11 @@ class NetworkDataSource {
         method: .get
     )
     
+    private var totalPages = 1
+    
     func fetchPhotoInfos(forPin pin: Pin) -> Observable<[PhotoInfo]> {
         let observable = Observable<[PhotoInfo]>()
-        let request = PhotosRequest(lat: pin.latitude, lon: pin.longitude)
+        let request = PhotosRequest(lat: pin.latitude, lon: pin.longitude, page: Int.random(in: 1...totalPages))
         
         getImagesForLocationApi.call(withPayload: request) { result in
             switch result {
@@ -30,6 +32,7 @@ class NetworkDataSource {
                     print(error)
                     
                 case .success(let response):
+                    self.totalPages = min(4000, response.photos.pages)
                     observable.dispatchChange(changed: response.photos.photo)
             }
         }
