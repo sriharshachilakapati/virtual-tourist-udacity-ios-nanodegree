@@ -18,6 +18,7 @@
 		205F6382262BFB68005812FF /* PhotosRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6381262BFB68005812FF /* PhotosRequest.swift */; };
 		205F6386262C2D82005812FF /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6385262C2D82005812FF /* PhotoCell.swift */; };
 		205F6393262F837B005812FF /* PhotoImageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6392262F837B005812FF /* PhotoImageCoordinator.swift */; };
+		205F6396262FAB1E005812FF /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F6395262FAB1E005812FF /* MapConfig.swift */; };
 		20B6946B26235BCD00A999A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946A26235BCD00A999A9 /* AppDelegate.swift */; };
 		20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946C26235BCD00A999A9 /* SceneDelegate.swift */; };
 		20B6946F26235BCD00A999A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B6946E26235BCD00A999A9 /* MapViewController.swift */; };
@@ -41,6 +42,7 @@
 		205F6381262BFB68005812FF /* PhotosRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosRequest.swift; sourceTree = "<group>"; };
 		205F6385262C2D82005812FF /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		205F6392262F837B005812FF /* PhotoImageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageCoordinator.swift; sourceTree = "<group>"; };
+		205F6395262FAB1E005812FF /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		20B6946726235BCD00A999A9 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20B6946A26235BCD00A999A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B6946C26235BCD00A999A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				20B6947326235BCD00A999A9 /* Virtual_Tourist.xcdatamodeld */,
 				205F637E262BF789005812FF /* PhotosResponse.swift */,
 				205F6381262BFB68005812FF /* PhotosRequest.swift */,
+				205F6395262FAB1E005812FF /* MapConfig.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				20B6946D26235BCD00A999A9 /* SceneDelegate.swift in Sources */,
 				20B6948D2625D16200A999A9 /* PhotosViewController.swift in Sources */,
 				205F636126274D8D005812FF /* NetworkDataSource.swift in Sources */,
+				205F6396262FAB1E005812FF /* MapConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

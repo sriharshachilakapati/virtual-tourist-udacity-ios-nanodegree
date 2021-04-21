@@ -51,19 +51,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="INj-M6-LcP">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6hi-Dx-cSt">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="3xO-x8-s4Q"/>
                                             <constraint firstAttribute="height" constant="200" id="6We-fr-8JI"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="3xO-x8-s4Q"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="3xO-x8-s4Q"/>
+                                                <exclude reference="6We-fr-8JI"/>
+                                            </mask>
+                                        </variation>
                                     </mapView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yL-xx-Lhs" userLabel="Collection View Wrapper">
-                                        <rect key="frame" x="0.0" y="200" width="414" height="525"/>
+                                        <rect key="frame" x="0.0" y="200" width="414" height="530"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="248" verticalCompressionResistancePriority="752" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rmv-v5-gfA">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="525"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="530"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UC3-Hx-dr9">
                                                     <size key="itemSize" width="128" height="128"/>
@@ -97,16 +109,16 @@
                                                 </cells>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No images" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dez-g1-Pvd">
-                                                <rect key="frame" x="166.5" y="252.5" width="81" height="20.5"/>
+                                                <rect key="frame" x="166.5" y="255" width="81" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="One-3S-1zF" userLabel="ActivityIndicatorViewWrapper">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="525"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="530"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mbQ-90-YVD">
-                                                        <rect key="frame" x="128" y="234" width="158.5" height="57.5"/>
+                                                        <rect key="frame" x="128" y="236.5" width="158.5" height="57.5"/>
                                                         <subviews>
                                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="PJv-U8-piY">
                                                                 <rect key="frame" x="60.5" y="0.0" width="37" height="37"/>
@@ -145,7 +157,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" axis="horizontal"/>
                             </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvX-OV-edx">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="lrR-oI-lXz"/>
                                     <barButtonItem title="New Collection" id="oIg-CR-qCb">

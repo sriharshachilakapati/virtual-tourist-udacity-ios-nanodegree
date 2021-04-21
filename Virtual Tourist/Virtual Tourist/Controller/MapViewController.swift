@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     private var selectedPin: Pin!
     
     private var pins: [Pin]!
+    private var mapConfig = MapConfig()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class MapViewController: UIViewController {
         }
         
         mapView.delegate = self
+        loadMapViewConfig()
     }
     
     private func updatePins(_ pins: [Pin]) {
@@ -93,5 +95,25 @@ extension MapViewController: MKMapViewDelegate {
         self.selectedPin = pins.filter { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }.first!
         
         performSegue(withIdentifier: "toPhotosScreen", sender: self)
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        let region = mapView.region.center
+        mapConfig.latitude = region.latitude
+        mapConfig.longitude = region.longitude
+        mapConfig.latitudeSpan = mapView.region.span.latitudeDelta
+        mapConfig.longitudeSpan = mapView.region.span.longitudeDelta
+        mapConfig.save()
+    }
+    
+    func loadMapViewConfig() {
+        if !mapConfig.load() {
+            mapViewDidChangeVisibleRegion(mapView)
+        }
+        
+        mapView.setRegion(MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(latitude: mapConfig.latitude, longitude: mapConfig.longitude),
+                            span: MKCoordinateSpan(latitudeDelta: mapConfig.latitudeSpan, longitudeDelta: mapConfig.longitudeSpan)),
+                          animated: true)
     }
 }

@@ -36,7 +36,8 @@ class PhotosViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+        collectionView.setCollectionViewLayout(UICollectionViewFlowLayout(), animated: true)
+        activityIndicatorView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.85)
         
         fetchImages(forceDownload: false)
     }
