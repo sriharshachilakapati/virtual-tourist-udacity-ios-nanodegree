@@ -11,6 +11,7 @@ struct PhotosRequest: Encodable {
     let method = "flickr.photos.search"
     let apiKey = "<INSERT-API-KEY-HERE>"
     let format = "json"
+    let perPage = 50
     let noJsonCallback = 1
     
     let lat: Double
@@ -20,6 +21,7 @@ struct PhotosRequest: Encodable {
         case method
         case apiKey = "api_key"
         case noJsonCallback = "nojsoncallback"
+        case perPage = "per_page"
         case format
         case lat
         case lon

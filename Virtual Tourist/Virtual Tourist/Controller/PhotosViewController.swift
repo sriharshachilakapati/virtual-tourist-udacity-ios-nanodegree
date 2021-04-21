@@ -10,6 +10,7 @@ import MapKit
 
 class PhotosViewController: UIViewController {
     private let repository = VirtualTouristRepository()
+    private let photoImageCoordinator = PhotoImageCoordinator()
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,9 +19,7 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
     
     var selectedPin: Pin!
-    
-    private var images = [UIImage]()
-    private var photos = [Photo]()
+
     private var fetchImageObservable: Observable<PhotoFetchProgress>!
     
     override func viewDidLoad() {
@@ -44,17 +43,8 @@ class PhotosViewController: UIViewController {
     
     private func handlePhotosChanged(photos: [Photo], didFetchFinish: Bool) {
         DispatchQueue.main.async {
-            self.images.removeAll()
-            self.photos.removeAll()
-            
             print("Got \(photos.count) after update. Finished is \(didFetchFinish)")
-            
-            for photo in photos {
-                if let data = photo.data, let image = UIImage(data: data) {
-                    self.images.append(image)
-                    self.photos.append(photo)
-                }
-            }
+            self.photoImageCoordinator.photos = photos
             
             if didFetchFinish {
                 self.activityIndicatorView.isHidden = true
@@ -62,7 +52,7 @@ class PhotosViewController: UIViewController {
             }
             
             self.noImagesLabel.isHidden = photos.count != 0
-            self.collectionView.reloadData()
+            self.photoImageCoordinator.applyChanges(to: self.collectionView)
         }
     }
     
@@ -81,13 +71,13 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        cell.photoImageView.image = images[indexPath.row]
+        cell.photoImageView.image = photoImageCoordinator.images[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Reloading collectionView: Count is \(images.count)")
-        return images.count
+        print("Reloading collectionView: Count is \(photoImageCoordinator.images.count)")
+        return photoImageCoordinator.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -96,6 +86,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        repository.deletePhoto(photos[indexPath.row])
+        repository.deletePhoto(photoImageCoordinator.photos[indexPath.row])
     }
 }
